@@ -1,0 +1,46 @@
+{
+    "user": {
+        "username": "Realign"
+    },
+    "menu": [
+        {
+            "note": "file",
+            "url": "compensateCoupon",
+            "name": "补偿优惠券管理",
+            "childsList": [
+                {
+                    "url": "auditIndex",
+                    "childsList": [],
+                    "name": "优惠券审核管理"
+                },
+                {
+                    "url": "index",
+                    "childsList": [],
+                    "name": "优惠券补偿管理"
+                },
+                {
+                    "url": "useIndex",
+                    "childsList": [],
+                    "name": "优惠券使用明细"
+                },
+                {
+                    "url": "config/page",
+                    "childsList": [],
+                    "name": "补偿规则配置"
+                }
+            ]
+        },
+        {
+            "note": "edit",
+            "url": "afterSaleConfig",
+            "name": "售后配置管理",
+            "childsList": [
+                {
+                    "url": "fishSwitchConfig",
+                    "childsList": [],
+                    "name": "七鱼开关配置"
+                }
+            ]
+        }
+    ]
+}

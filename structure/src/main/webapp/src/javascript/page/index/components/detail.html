@@ -1,0 +1,137 @@
+<div class="m-card">
+    <div class="card_c">
+        <div class="form-group">
+            <div class="row f-mgtb">
+                <label class="col-sm-1 f-tar">日期：</label>
+
+                <div class="col-sm-5 row">
+                    <div class="col-sm-5">
+                        <datepicker2 name="startTime" showNow=false startDate={filter.startTime}
+                                     endDate={filter.endTime}
+                                     on-select="{this.selectDate($event)}"></datepicker2>
+                    </div>
+                </div>
+                <label class="col-sm-1 f-tar">仓库：</label>
+
+                <div class="col-sm-2">
+                    <select r-model="{filter.refundWarehouseId}" class="form-control"
+                            on-change="{this.changeReturnBin()}">
+                        <option value="">请选择</option>
+                        {#list returnBinList as wh}
+                        <option value="{wh.refundWarehouseId}">{wh.wareHouseName}</option>
+                        {/list}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-card">
+    <div class="card_c">
+        <div class="row f-mgtb">
+            <div class="col-sm-2 u-card">
+                <div class="text-center">
+                    <div>已匹配未验货包裹
+                        <span class="icon glyphicon glyphicon-question-sign"><span
+                                class="tips">所有已匹配但未验货包裹</span></span>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);" on-click={this.redirectPage(1)} >{info.matchedUncheckedPackageNum || 0}</a></div>
+                </div>
+            </div>
+            <div class="col-sm-2 u-card">
+                <div class="text-center">
+                    <div>超时未验货包裹
+                        <span class="icon glyphicon glyphicon-question-sign"><span
+                                class="tips">所有已收货超过1天的包裹</span></span>
+                    </div>
+                    <div><a href="javascript:void(0);"
+                            on-click={this.redirectPage(2)} target="_blank">{info.expiredUncheckedPackageNum || 0}</a></div>
+                </div>
+            </div>
+            <div class="col-sm-2 u-card">
+                <div class="text-center">
+                    <div>已验货包裹</div>
+                    <div>
+                        <a href="javascript:void(0);" on-click={this.redirectPage(3)}
+                           target="_blank">{info.checkedPackageNum || 0}</a></div>
+                </div>
+            </div>
+            <div class="col-sm-2 u-card">
+                <div class="text-center">
+                    <div>未验货包裹
+                        <span class="icon glyphicon glyphicon-question-sign"><span
+                                class="tips">所有的已登记但未验货包裹</span></span>
+                    </div>
+                    <div><a href="javascript:void(0);" on-click={this.redirectPage(4)} target="_blank">{info.uncheckedPackageNum || 0}</a></div>
+                </div>
+            </div>
+            <div class="col-sm-2 u-card">
+                <div class="text-center">
+                    <div>已收货包裹</div>
+                    <div>
+                        <a  href="javascript:void(0);" on-click={this.redirectPage(5)}
+                           target="_blank">{info.receivedPackageNum || 0}</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card_c">
+        <h2>详情<!--<span class="glyphicon glyphicon-arrow-down"></span>--></h2>
+    </div>
+    <div class="card_c">
+        <table class="table table-striped table-hover m-table">
+            <thead>
+            <tr>
+                <th width="120">日期</th>
+                <th width="120">已验货包裹</th>
+                <th width="120">未验货包裹</th>
+                <th width="120">已收货包裹</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#if !isLoading && info.details && info.details.length > 0}
+            {#list info.details as item}
+            <tr>
+                <td title="日期">{item.dateTime | format:'yyyy-MM-dd'}</td>
+                <td title="已验货包裹">
+                    <a target="_blank"
+                       href="/flow/matchedPackage.do?from=homepage&startTime={item.dateTime | format:'yyyy-MM-dd'}&endTime={item.dateTime | format:'yyyy-MM-dd'}&returnBin={filter.refundWarehouseId}">{item.checked}</a>
+                </td>
+                <td title="未验货包裹">{item.unchecked}</td>
+                <td title="已收货包裹">
+                    <a target="_blank"
+                       href="/register/registerPackage.do?from=homepage&startTime={item.dateTime | format:'yyyy-MM-dd'}&endTime={item.dateTime | format:'yyyy-MM-dd'}&returnBin={filter.refundWarehouseId}">{item.received}</a>
+                </td>
+            </tr>
+            {/list}
+            {#else}
+            <tr>
+                <td colspan="4" class="text-center">
+                    {#if isLoading}
+                    <div class="u-loading"></div>
+                    {#else}
+                    sorry，没有找到符合你输入条件的结果，请重新输入&hellip;
+                    {/if}
+                </td>
+            </tr>
+            {/if}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

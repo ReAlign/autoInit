@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+
+	<display-name>kaola-aftersalems-web</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:applicationContext.xml
+		</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Spring刷新Introspector防止内存泄露 -->
+	<listener>
+		<listener-class>
+			org.springframework.web.util.IntrospectorCleanupListener
+		</listener-class>
+	</listener>
+	<!-- 支持session scope的Spring bean -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
+	</listener>
+	
+	<!-- FILTER CONFIGURATION BEGIN -->
+	<filter>
+		<filter-name>setCharacterEncoding</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>setCharacterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- ===============================CAS配置开始===================================== -->
+	<!-- CAS公共配置项开始 -->
+	<!--认证Filter，用户如果没在CAS登录的话，会将请求redirect到CAS的login接口-->
+	<filter>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<filter-class>com.netease.cas.client.filter.AuthenticationFilter</filter-class>
+	</filter>
+	<!--ticket验证Filter，访问cas的验证接口验证ticket，并接收CAS返回的用户信息 -->
+	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>com.netease.cas.client.filter.Cas20ServiceTicketValidationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<!--CAS认证方式2的配置结束 -->
+
+	<!-- FILTER CONFIGURATION END -->
+	
+	<!-- SPRING MVC CORE SERVLET CONFIGURATION BEGIN -->
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>
+			org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			 <param-name>contextConfigLocation</param-name>
+			 <param-value>classpath:spring-mvc-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<!-- SPRING MVC CORE SERVLET CONFIGURATION END -->
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/40x.htm</location>
+    </error-page>
+
+    <welcome-file-list>
+        <welcome-file>index.do</welcome-file>
+	</welcome-file-list>
+
+</web-app>

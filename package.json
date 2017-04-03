@@ -1,0 +1,31 @@
+{
+  "name": "autoinit",
+  "version": "1.0.0",
+  "description": "a node command line tool to auto generate a web structure.",
+  "main": "index.js",
+  "bin": {
+    "autoinit": "./bin/autoinit.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReAlign/autoInit.git"
+  },
+  "keywords": [
+    "autoinit",
+    "structure"
+  ],
+  "author": "realign",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ReAlign/autoInit/issues"
+  },
+  "homepage": "https://github.com/ReAlign/autoInit#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "commander": "^2.9.0",
+    "fs-extra": "^2.1.2"
+  }
+}
